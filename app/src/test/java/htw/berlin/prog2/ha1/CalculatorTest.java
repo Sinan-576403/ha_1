@@ -105,35 +105,30 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+
     @Test
-    @DisplayName("should display result after subtracting a positive and a negative number")
-    void testPositiveSubtraction(){  //Rotertest
+    @DisplayName("Sollte Error anzeigen wenn 1/x")
+    void testDividieren() {
         Calculator calc = new Calculator();
 
-        calc.pressDigitKey(3);
-        calc.pressBinaryOperationKey("-");
-        calc.pressNegativeKey();
-        calc.pressDigitKey(3);
-        calc.pressEqualsKey();
+        calc.pressDigitKey(0);
+        calc.pressUnaryOperationKey("1/x");
 
-        String expected = "6";
+        String expected = "Error";
         String actual = calc.readScreen();
 
         assertEquals(expected, actual);
     }
+
     @Test
-    @DisplayName("should display result after multiplying a decimal number and a number")
-    void testDecimalNumbers() {  //2.Rotertest
+    @DisplayName("Negation von Null ergibt Null")
+    void testNegativeZero() {       // Rotertest 2
         Calculator calc = new Calculator();
 
         calc.pressDigitKey(0);
-        calc.pressDotKey();
-        calc.pressDigitKey(7);
-        calc.pressBinaryOperationKey("x");
-        calc.pressDigitKey(2);
-        calc.pressEqualsKey();
+        calc.pressNegativeKey();
 
-        String expected = "1.4";
+        String expected = "0";
         String actual = calc.readScreen();
 
         assertEquals(expected, actual);

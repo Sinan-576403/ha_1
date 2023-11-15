@@ -31,8 +31,8 @@ public class Calculator {
     public void pressDigitKey(int digit) {
         if(digit > 9 || digit < 0) throw new IllegalArgumentException();
 
-        //Bugfix für Roten test  if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
-        if(screen.equals("0") || latestValue == Double.parseDouble(screen) && !screen.endsWith(".")) screen = "";
+        if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
+
         screen = screen + digit;
     }
 
@@ -81,7 +81,8 @@ public class Calculator {
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
-        if(screen.equals("NaN")) screen = "Error";
+        if(screen.equals("NaN") || screen.equals("Infinity")) screen = "Error";
+        //if(screen.equals("NaN")) screen = "Error";
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
 
     }
@@ -105,13 +106,11 @@ public class Calculator {
      * entfernt und der Inhalt fortan als positiv interpretiert.
      */
     public void pressNegativeKey() {
-        if (screen.startsWith("-")){    //Bugfix für Roten test  screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
-            screen.substring(1);
-        } else if (latestOperation.equals("-") || latestOperation.equals("+")){
-            screen = "-" + "0";
-        } else {
-            screen = "-" + screen;
-        }    }
+        if(!screen.equals("0")) {
+            screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
+            //screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
+        }
+    }
 
     /**
      * Empfängt den Befehl der gedrückten "="-Taste.
